@@ -27,6 +27,7 @@ module Duty
 
         def execute
           sh("Checkout `master` branch") { 'git checkout master' }
+          sh("Create `feature/#{@feature_name}` branch") { "git checkout -b feature/#{@feature_name}" }
         end
       end
     end

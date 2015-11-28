@@ -20,6 +20,9 @@ module Duty
         def self.usage
           "duty start-feature <feature-name>"
         end
+
+        def execute
+        end
       end
     end
   end

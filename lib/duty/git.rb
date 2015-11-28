@@ -4,7 +4,8 @@ module Duty
   module Git
     def self.tasks
       [
-        Tasks::StartFeature
+        Tasks::StartFeature,
+        Tasks::ContinueFeature
       ]
     end
 
@@ -29,6 +30,24 @@ module Duty
           sh("Checkout `master` branch") { 'git checkout master' }
           sh("Create `feature/#{@feature_name}` branch") { "git checkout -b feature/#{@feature_name}" }
           sh("Push `feature/#{@feature_name}` branch to `origin`") { "git push -u origin feature/#{@feature_name}" }
+        end
+      end
+
+      class ContinueFeature < BaseTask
+        def self.description
+          "Continue on an already existing feature"
+        end
+
+        def self.usage
+          "duty continue-feature <feature-name>"
+        end
+
+        def valid?
+          @feature_name = @arguments.first
+        end
+
+        def execute
+          sh("Checkout `feature/#{@feature_name}` branch") { "git checkout feature/#{@feature_name}" }
         end
       end
     end

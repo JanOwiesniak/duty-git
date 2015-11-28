@@ -4,6 +4,9 @@ git specific tasks for the duty task manager
 
 ## Installation
 
+1. Clone this repo to your local system
+2. Add following lines to your your `.duty` file.
+
 ```
 tasks:
   git: path/to/duty-git/lib/duty/git.rb

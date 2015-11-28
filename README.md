@@ -4,17 +4,49 @@ git specific tasks for the duty task manager
 
 ## Installation
 
-Clone this repository and add `path/to/duty-git/lib/duty/tasks` to your `.duty.yml`
-
 ```
 tasks:
-  git: path/to/duty-git/lib/duty//tasks
+  git: path/to/duty-git/lib/duty/git.rb
 ```
 
 ## Usage
 
 ```
 duty
+```
+
+## Tasks
+
+### StartFeature
+
+Start a new feature
+
+```
+duty start-feature <feature-name>
+```
+
+### ContinueFeature
+
+Continue on an already existing feature
+
+```
+duty continue-feature <feature-name>
+```
+
+### DeleteFeature
+
+Delete a feature
+
+```
+duty delete-feature <feature-name>
+```
+
+### MergeFeature
+
+Merge a feature into `master`
+
+```
+duty merge-feature <feature-name>
 ```
 
 ## Contributing

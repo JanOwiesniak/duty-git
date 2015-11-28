@@ -11,11 +11,19 @@ module Duty
       ]
     end
 
+    module Commands
+      def checkout_master
+        sh("Checkout `master` branch") { 'git checkout master' }
+      end
+    end
+
     module Tasks
       class BaseTask < ::Duty::Tasks::Base
       end
 
       class StartFeature < BaseTask
+        include Duty::Git::Commands
+
         def self.description
           "Start a new feature"
         end
@@ -29,7 +37,7 @@ module Duty
         end
 
         def execute
-          sh("Checkout `master` branch") { 'git checkout master' }
+          checkout_master
           sh("Create `feature/#{@feature_name}` branch") { "git checkout -b feature/#{@feature_name}" }
           sh("Push `feature/#{@feature_name}` branch to `origin`") { "git push -u origin feature/#{@feature_name}" }
         end
@@ -54,6 +62,8 @@ module Duty
       end
 
       class DeleteFeature < BaseTask
+        include Duty::Git::Commands
+
         def self.description
           "Delete a feature"
         end
@@ -67,13 +77,15 @@ module Duty
         end
 
         def execute
-          sh("Checkout `master` branch") { 'git checkout master' }
+          checkout_master
           sh("Delete `feature/#{@feature_name}` branch on `origin`") { "git push origin --delete remotes/origin/feature/#{@feature_name}" }
           sh("Delete `feature/#{@feature_name}` branch") { "git branch -d feature/#{@feature_name}" }
         end
       end
 
       class MergeFeature < BaseTask
+        include Duty::Git::Commands
+
         def self.description
           "Merge a feature into `master`"
         end
@@ -87,7 +99,7 @@ module Duty
         end
 
         def execute
-          sh("Checkout `master` branch") { 'git checkout master' }
+          checkout_master
           sh("Merge feature/#{@feature_name} into `master`") { "git merge --no-ff feature/#{@feature_name}" }
         end
       end

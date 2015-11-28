@@ -1,11 +1,25 @@
 require 'test_helper'
 
-class Duty::GitTest < Minitest::Test
-  def test_that_it_has_a_version_number
-    refute_nil ::Duty::Git::VERSION
+DUTY_MODULE = eval File.read(File.realpath('lib/duty/git.rb'))
+
+class Duty::GitTest < Minitest::Spec
+  it 'exposes all available tasks' do
+    assert_tasks [
+      Duty::Git::Tasks::StartFeature
+    ]
   end
 
-  def test_it_does_something_useful
-    assert false
+  private
+
+  def assert_tasks(expected_tasks)
+    assert_equal expected_tasks, actual_tasks
+
+    actual_tasks.each do |task_class|
+      assert task_class.ancestors.include?(::Duty::Tasks::Base)
+    end
+  end
+
+  def actual_tasks
+    DUTY_MODULE.tasks
   end
 end

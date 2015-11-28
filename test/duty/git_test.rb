@@ -5,7 +5,9 @@ DUTY_MODULE = eval File.read(File.realpath('lib/duty/git.rb'))
 class Duty::GitTest < Minitest::Spec
   it 'exposes all available tasks' do
     assert_tasks [
-      Duty::Git::Tasks::StartFeature
+      Duty::Git::Tasks::StartFeature,
+      Duty::Git::Tasks::ContinueFeature,
+      Duty::Git::Tasks::DeleteFeature
     ]
   end
 

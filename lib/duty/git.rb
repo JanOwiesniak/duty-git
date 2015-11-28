@@ -16,6 +16,10 @@ module Duty
         def self.description
           "Start a new feature"
         end
+
+        def self.usage
+          "duty start-feature <feature-name>"
+        end
       end
     end
   end

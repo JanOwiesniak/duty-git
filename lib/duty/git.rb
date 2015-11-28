@@ -13,6 +13,9 @@ module Duty
       end
 
       class StartFeature < BaseTask
+        def self.description
+          "Start a new feature"
+        end
       end
     end
   end

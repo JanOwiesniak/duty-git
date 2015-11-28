@@ -26,6 +26,7 @@ module Duty
         end
 
         def execute
+          sh("Checkout `master` branch") { 'git checkout master' }
         end
       end
     end

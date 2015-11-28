@@ -5,7 +5,8 @@ module Duty
     def self.tasks
       [
         Tasks::StartFeature,
-        Tasks::ContinueFeature
+        Tasks::ContinueFeature,
+        Tasks::DeleteFeature
       ]
     end
 
@@ -48,6 +49,26 @@ module Duty
 
         def execute
           sh("Checkout `feature/#{@feature_name}` branch") { "git checkout feature/#{@feature_name}" }
+        end
+      end
+
+      class DeleteFeature < BaseTask
+        def self.description
+          "Deletes a feature"
+        end
+
+        def self.usage
+          "duty delete-features"
+        end
+
+        def valid?
+          @feature_name = @arguments.first
+        end
+
+        def execute
+          sh("Checkout `master` branch") { 'git checkout master' }
+          sh("Delete `feature/#{@feature_name}` branch on `origin`") { "git push origin --delete remotes/origin/feature/#{@feature_name}" }
+          sh("Delete `feature/#{@feature_name}` branch") { "git branch -d feature/#{@feature_name}" }
         end
       end
     end

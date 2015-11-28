@@ -54,11 +54,11 @@ module Duty
 
       class DeleteFeature < BaseTask
         def self.description
-          "Deletes a feature"
+          "Delete a feature"
         end
 
         def self.usage
-          "duty delete-features"
+          "duty delete-feature <feature-name>"
         end
 
         def valid?

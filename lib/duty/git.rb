@@ -6,7 +6,8 @@ module Duty
       [
         Tasks::StartFeature,
         Tasks::ContinueFeature,
-        Tasks::DeleteFeature
+        Tasks::DeleteFeature,
+        Tasks::MergeFeature
       ]
     end
 
@@ -69,6 +70,25 @@ module Duty
           sh("Checkout `master` branch") { 'git checkout master' }
           sh("Delete `feature/#{@feature_name}` branch on `origin`") { "git push origin --delete remotes/origin/feature/#{@feature_name}" }
           sh("Delete `feature/#{@feature_name}` branch") { "git branch -d feature/#{@feature_name}" }
+        end
+      end
+
+      class MergeFeature < BaseTask
+        def self.description
+          "Merge a feature into `master`"
+        end
+
+        def self.usage
+          "duty merge-feature <feature-name>"
+        end
+
+        def valid?
+          @feature_name = @arguments.first
+        end
+
+        def execute
+          sh("Checkout `master` branch") { 'git checkout master' }
+          sh("Merge feature/#{@feature_name} into `master`") { "git merge --no-ff feature/#{@feature_name}" }
         end
       end
     end

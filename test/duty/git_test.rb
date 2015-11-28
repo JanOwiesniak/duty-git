@@ -7,7 +7,8 @@ class Duty::GitTest < Minitest::Spec
     assert_tasks [
       Duty::Git::Tasks::StartFeature,
       Duty::Git::Tasks::ContinueFeature,
-      Duty::Git::Tasks::DeleteFeature
+      Duty::Git::Tasks::DeleteFeature,
+      Duty::Git::Tasks::MergeFeature
     ]
   end
 

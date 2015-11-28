@@ -21,6 +21,10 @@ module Duty
           "duty start-feature <feature-name>"
         end
 
+        def valid?
+          @feature_name = @arguments.first
+        end
+
         def execute
         end
       end

@@ -15,7 +15,7 @@ tasks:
 ## Usage
 
 ```
-duty
+$ duty
 ```
 
 ## Tasks
@@ -25,7 +25,7 @@ duty
 Start a new feature
 
 ```
-duty start-feature <feature-name>
+$ duty start-feature <feature-name>
 ```
 
 ### ContinueFeature
@@ -33,7 +33,7 @@ duty start-feature <feature-name>
 Continue on an already existing feature
 
 ```
-duty continue-feature <feature-name>
+$ duty continue-feature <feature-name>
 ```
 
 ### DeleteFeature
@@ -41,7 +41,7 @@ duty continue-feature <feature-name>
 Delete a feature
 
 ```
-duty delete-feature <feature-name>
+$ duty delete-feature <feature-name>
 ```
 
 ### MergeFeature
@@ -49,7 +49,7 @@ duty delete-feature <feature-name>
 Merge a feature into `master`
 
 ```
-duty merge-feature <feature-name>
+$ duty merge-feature <feature-name>
 ```
 
 ## Contributing

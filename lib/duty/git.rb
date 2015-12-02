@@ -2,6 +2,10 @@ require 'duty'
 
 module Duty
   module Git
+    def self.namespace
+      'git'
+    end
+
     def self.tasks
       [
         Tasks::StartFeature,
@@ -107,4 +111,4 @@ module Duty
   end
 end
 
-Duty::Git
+Duty::Registry.register(Duty::Git)

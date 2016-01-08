@@ -11,7 +11,8 @@ module Duty
         Tasks::StartFeature,
         Tasks::ContinueFeature,
         Tasks::DeleteFeature,
-        Tasks::MergeFeature
+        Tasks::MergeFeature,
+        Tasks::Status
       ]
     end
 
@@ -105,6 +106,45 @@ module Duty
         def execute
           checkout_master
           sh("Merge feature/#{@feature_name} into `master`") { "git merge --no-ff feature/#{@feature_name}" }
+        end
+      end
+
+      class Status < BaseTask
+        TAG_UNTRACKED = "[?]"
+        TAG_DIRTY = "[ERR]"
+        TAG_CLEAN = "[OK]"
+
+        def self.description
+          "Shows which directories are clean/dirty"
+        end
+
+        def self.usage
+          "duty status"
+        end
+
+        def execute
+          dirname = File.basename(Dir.pwd)
+
+          status = `git status`.strip
+          branch = `git rev-parse --abbrev-ref HEAD`.strip
+
+          if status =~ /(Changes not staged|Untracked files)/
+            files =
+              if status =~ /Changes not staged/
+                modified_files = status.scan(/modified:(.+)/).flatten.map(&:strip)
+                modified_files.join(' ')
+              else
+                "<untracked files>"
+              end
+
+            if status =~ /Untracked files/ && status !~ /Changes not staged/
+              sh("#{TAG_UNTRACKED} #{dirname.ljust(24)} #{branch} #{files}") {}
+            else
+              sh("#{TAG_DIRTY} #{dirname.ljust(24)} #{branch} #{files}") {}
+            end
+          else
+            sh("#{TAG_CLEAN} #{dirname.ljust(24)} #{branch}") {}
+          end
         end
       end
     end
